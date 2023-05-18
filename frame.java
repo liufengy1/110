@@ -3,35 +3,48 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class frame {
-   
+public class myframe extends JFrame{
 
-  public static void createAndShowGUI() {
+
+  JTextField textField = new JTextField(20);
+  JButton continueButton = new JButton("Continue");
+  JPanel textAreaPanel = new JPanel();
+
+
+  public myframe(String title) {
        
-        JFrame frame = new JFrame("Similarity program");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
+        super(title);
+       
 
         
         JPanel panel = new JPanel();
-        frame.getContentPane().add(panel, BorderLayout.CENTER);
+        this.getContentPane().add(panel, BorderLayout.CENTER);
         panel.setLayout(new BorderLayout());
 
+        JPanel textAreaPanel = new JPanel();
+        textAreaPanel.setLayout(new BoxLayout(textAreaPanel, BoxLayout.X_AXIS));
+        textAreaPanel.add(new JScrollPane(BagOfWords.textArea));
+        textAreaPanel.add(new JScrollPane(BagOfWords.textArea1));
+        textAreaPanel.add(new JScrollPane(BagOfWords.textArea2));
+        textAreaPanel.add(new JScrollPane(BagOfWords.textArea3));
+        textAreaPanel.add(new JScrollPane(BagOfWords.textArea4));
+        panel.add(textAreaPanel, BorderLayout.CENTER);// Add the JTextArea panel to the main panel
+
         
-        JTextArea textArea = new JTextArea();
-        panel.add(new JScrollPane(textArea), BorderLayout.CENTER);
+    
 
         JPanel inputPanel = new JPanel();
-        frame.getContentPane().add(inputPanel, BorderLayout.SOUTH);
+        this.getContentPane().add(inputPanel, BorderLayout.SOUTH);
         inputPanel.setLayout(new FlowLayout());
 
-        JTextField textField = new JTextField(20);
+       
         inputPanel.add(textField);
 
-        JButton continueButton = new JButton("Continue");
+        
         inputPanel.add(continueButton);
+        continueButton.addActionListener(e -> BagOfWords. actionPerformed(this));
 
         
-        frame.setVisible(true);
+        this.setVisible(true);
     }
 }
