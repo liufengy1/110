@@ -2,14 +2,19 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.*;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.HashMap;
-import javax.swing.*;
+
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
 import javax.swing.text.JTextComponent;
 
 public class BagOfWords {
@@ -46,6 +51,21 @@ public class BagOfWords {
 
         return words;
     }
+    public static List<String> splitTextIntoWordsIgnoreQuotes(String text) {
+       
+        String newText = text.replaceAll("\"([^\"]*)\"", "");
+        
+        Pattern pattern = Pattern.compile("[\\p{L}\\p{N}]+");
+        Matcher matcher = pattern.matcher(newText);
+        List<String> words = new ArrayList<>();
+    
+        while (matcher.find()) {
+            words.add(matcher.group());
+        }
+    
+        return words;
+    }
+    
     public static void calculateTermFrequency(List<String> words, JTextArea t,String path) {
         Map<String, Integer> termFrequency = new HashMap<>();
         
@@ -173,7 +193,21 @@ public class BagOfWords {
                         calculateTermFrequency(words2,textArea2,filepath2);
                         calculateTermFrequency(words3,textArea3,filepath3);
                         calculateTermFrequency(words4,textArea4,filepath4);
+                        words1.clear();
+                        words2.clear();
+                        words3.clear();
+                        words4.clear();
+                        words.clear();
+
+                         words = splitTextIntoWordsIgnoreQuotes(content);
+                        words1= splitTextIntoWordsIgnoreQuotes(content1);
+                         words2= splitTextIntoWordsIgnoreQuotes(content2);
+                         words3= splitTextIntoWordsIgnoreQuotes(content3);
+                        words4= splitTextIntoWordsIgnoreQuotes(content4);
                        
+
+
+                        
                         checkTheWords(words, words1, 5,f,textArea,filePath,filepath1);
                         checkTheWords(words, words2, 5,f,textArea,filePath,filepath2);
                         checkTheWords(words, words3, 5,f,textArea,filePath,filepath3);
